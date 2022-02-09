@@ -1,7 +1,13 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
+import { trpc } from '@utils/trpc';
 
 const Home: React.FC<NextPage> = () => {
+	const { data, isLoading } = trpc.useQuery(['hello', { text: 'Thømes' }]);
+
+	if (isLoading) return <div>Loading...</div>;
+
+	if (data) return <div>{data.greeting}.</div>;
+
 	return (
 		<section className="h-screen w-screen flex  flex-col justify-center items-center">
 			<div className="text-2xl text-center mb-8">Which Pokemon is Rounded?</div>
